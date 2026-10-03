@@ -8,31 +8,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <style>
-        /* ==========================================
-           MODERN QR CODE GENERATOR STYLESHEET
-           ========================================== */
-
         :root {
-            --primary-color: #6366f1;
-            --secondary-color: #ec4899;
-            --success-color: #10b981;
-            --danger-color: #ef4444;
-            --warning-color: #f59e0b;
-            --dark-bg: #0f172a;
-            --light-bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text-dark: #1e293b;
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
             --text-light: #64748b;
-            --border-color: #e2e8f0;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --border: #e2e8f0;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         [data-theme="dark"] {
-            --card-bg: #1e293b;
-            --text-dark: #f1f5f9;
+            --card: #1e293b;
+            --text: #f1f5f9;
             --text-light: #cbd5e1;
-            --border-color: #334155;
-            --light-bg: #0f172a;
+            --border: #334155;
+            --light: #0f172a;
         }
 
         * {
@@ -41,16 +36,12 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: var(--text-dark);
-            transition: background 0.3s ease;
+            color: var(--text);
+            transition: background 0.3s;
             padding: 20px;
         }
 
@@ -63,32 +54,29 @@
             margin: 0 auto;
         }
 
-        /* ==================== HEADER ==================== */
+        /* ===== HEADER ===== */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 40px;
             padding: 20px;
-            background: var(--card-bg);
+            background: var(--card);
             border-radius: 15px;
             box-shadow: var(--shadow);
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .logo {
             font-size: 28px;
             font-weight: 700;
-            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            background: linear-gradient(135deg, #6366f1, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             display: flex;
             align-items: center;
             gap: 10px;
-        }
-
-        .logo i {
-            -webkit-text-fill-color: #6366f1;
         }
 
         .header-actions {
@@ -97,8 +85,8 @@
             align-items: center;
         }
 
-        .theme-toggle, .info-btn {
-            background: var(--primary-color);
+        .btn-icon {
+            background: var(--primary);
             border: none;
             color: white;
             width: 45px;
@@ -106,18 +94,18 @@
             border-radius: 50%;
             cursor: pointer;
             font-size: 18px;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .theme-toggle:hover, .info-btn:hover {
+        .btn-icon:hover {
             transform: scale(1.1);
             box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
         }
 
-        /* ==================== MAIN CONTENT ==================== */
+        /* ===== MAIN CONTENT ===== */
         .main-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -129,44 +117,42 @@
             .main-content {
                 grid-template-columns: 1fr;
             }
-
             header {
                 flex-direction: column;
-                gap: 15px;
             }
         }
 
-        /* ==================== CARDS ==================== */
+        /* ===== CARD ===== */
         .card {
-            background: var(--card-bg);
+            background: var(--card);
             border-radius: 15px;
             padding: 30px;
             box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            border: 1px solid var(--border);
             animation: slideIn 0.5s ease;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
         }
 
         .card-title {
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 20px;
-            color: var(--text-dark);
+            color: var(--text);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .card-title i {
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
-        /* ==================== FORM INPUTS ==================== */
+        /* ===== INPUT ===== */
         .input-group {
             margin-bottom: 20px;
         }
@@ -175,7 +161,7 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
-            color: var(--text-dark);
+            color: var(--text);
             font-size: 14px;
         }
 
@@ -185,22 +171,21 @@
         select {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid var(--border-color);
+            border: 2px solid var(--border);
             border-radius: 10px;
             font-size: 14px;
             font-family: inherit;
-            transition: all 0.3s ease;
-            background: var(--card-bg);
-            color: var(--text-dark);
+            transition: all 0.3s;
+            background: var(--card);
+            color: var(--text);
         }
 
-        input[type="text"]:focus,
-        input[type="url"]:focus,
+        input:focus,
         textarea:focus,
         select:focus {
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
         }
 
         textarea {
@@ -208,7 +193,7 @@
             min-height: 80px;
         }
 
-        /* ==================== OPTIONS GRID ==================== */
+        /* ===== GRID OPTIONS ===== */
         .options-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -216,25 +201,13 @@
             margin-bottom: 20px;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 480px) {
             .options-grid {
                 grid-template-columns: 1fr;
             }
         }
 
-        .option-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .option-item label {
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: var(--text-dark);
-            font-size: 13px;
-        }
-
-        /* ==================== BUTTONS ==================== */
+        /* ===== BUTTONS ===== */
         .btn {
             padding: 12px 24px;
             border: none;
@@ -242,14 +215,14 @@
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            background: linear-gradient(135deg, #6366f1, #ec4899);
             color: white;
             width: 100%;
             justify-content: center;
@@ -257,40 +230,32 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 10px 25px rgba(99,102,241,0.4);
         }
 
-        .btn-secondary {
-            background: var(--secondary-color);
+        .btn-small {
+            background: var(--secondary);
             color: white;
             padding: 8px 16px;
             font-size: 12px;
         }
 
-        .btn-secondary:hover {
+        .btn-small:hover {
             background: #d9326f;
         }
 
-        .btn-success {
-            background: var(--success-color);
+        .btn-download {
+            background: var(--success);
             color: white;
             padding: 8px 16px;
             font-size: 12px;
         }
 
-        .btn-danger {
-            background: var(--danger-color);
-            color: white;
-            padding: 8px 16px;
-            font-size: 12px;
+        .btn-download:hover {
+            background: #059669;
         }
 
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* ==================== QR PREVIEW ==================== */
+        /* ===== QR PREVIEW ===== */
         .qr-preview {
             background: white;
             padding: 30px;
@@ -301,7 +266,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border: 2px dashed var(--border-color);
+            border: 2px dashed var(--border);
+            margin-bottom: 20px;
         }
 
         .qr-preview #qrcode {
@@ -309,9 +275,103 @@
             animation: fadeIn 0.5s ease;
         }
 
-        .qr-preview-placeholder {
+        .qr-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* ===== HISTORY ===== */
+        .history-container {
+            margin-top: 30px;
+        }
+
+        .history-list {
+            list-style: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            padding: 15px;
+            background: var(--light);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .history-item:hover {
+            transform: translateX(5px);
+            background: var(--border);
+        }
+
+        .history-item-text {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        .history-item-time {
+            font-size: 11px;
             color: var(--text-light);
-            font-size: 14px;
+            margin: 0 10px;
+        }
+
+        .history-delete {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .history-delete:hover {
+            background: #dc2626;
+        }
+
+        /* ===== ALERTS ===== */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .alert-success {
+            background: rgba(16,185,129,0.1);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+
+        .alert-error {
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+            border-left: 4px solid var(--danger);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeIn {
@@ -325,108 +385,7 @@
             }
         }
 
-        .qr-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        /* ==================== HISTORY ==================== */
-        .history-container {
-            margin-top: 40px;
-        }
-
-        .history-list {
-            list-style: none;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .history-item {
-            padding: 15px;
-            background: var(--light-bg);
-            border-radius: 8px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-color);
-        }
-
-        .history-item:hover {
-            background: var(--border-color);
-            transform: translateX(5px);
-        }
-
-        .history-item-text {
-            flex: 1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            font-size: 13px;
-            color: var(--text-dark);
-        }
-
-        .history-item-time {
-            font-size: 11px;
-            color: var(--text-light);
-            margin: 0 10px;
-        }
-
-        .history-item button {
-            background: var(--danger-color);
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .history-item button:hover {
-            background: #dc2626;
-            transform: scale(1.05);
-        }
-
-        /* ==================== ALERTS ==================== */
-        .alert {
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            animation: slideIn 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .alert-success {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success-color);
-            border-left: 4px solid var(--success-color);
-        }
-
-        .alert-error {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger-color);
-            border-left: 4px solid var(--danger-color);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ==================== MODAL ==================== */
+        /* ===== MODAL ===== */
         .modal {
             display: none;
             position: fixed;
@@ -435,18 +394,24 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            animation: fadeIn 0.3s ease;
+            background: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-content {
-            background: var(--card-bg);
-            margin: 10% auto;
+            background: var(--card);
             padding: 30px;
             border-radius: 15px;
             width: 90%;
             max-width: 500px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s;
         }
 
         .modal-header {
@@ -458,43 +423,40 @@
 
         .modal-header h2 {
             font-size: 20px;
-            color: var(--text-dark);
         }
 
-        .close-modal {
+        .close-btn {
             background: none;
             border: none;
             font-size: 24px;
             cursor: pointer;
             color: var(--text-light);
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
 
-        .close-modal:hover {
-            color: var(--danger-color);
+        .close-btn:hover {
+            color: var(--danger);
             transform: rotate(90deg);
         }
 
-        /* ==================== SCROLLBAR ==================== */
+        /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar {
             width: 8px;
         }
 
         ::-webkit-scrollbar-track {
-            background: var(--light-bg);
-            border-radius: 10px;
+            background: var(--light);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
+            background: var(--primary);
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary-color);
+            background: var(--secondary);
         }
 
-        /* ==================== EMPTY STATE ==================== */
         .empty-state {
             text-align: center;
             padding: 40px 20px;
@@ -506,34 +468,48 @@
             margin-bottom: 20px;
             opacity: 0.5;
         }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-qrcode"></i>
+                QR Studio
+            </div>
+            <div class="header-actions">
+                <button class="btn-icon" id="themeToggle" title="تبديل المظهر">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="btn-icon" id="infoBtn" title="معلومات">
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        </header>
 
-        .empty-state p {
-            font-size: 14px;
-        }
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- LEFT SECTION - INPUT -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-edit"></i>
+                    إنشاء رمز QR
+                </div>
 
-        /* ==================== STATS ==================== */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
+                <div id="alertContainer"></div>
 
-        @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+                <div class="input-group">
+                    <label>نوع البيانات</label>
+                    <select id="dataType">
+                        <option value="text">نص عادي</option>
+                        <option value="url">رابط ويب</option>
+                        <option value="email">بريد إلكتروني</option>
+                        <option value="phone">رقم هاتف</option>
+                        <option value="wifi">شبكة WiFi</option>
+                    </select>
+                </div>
 
-        .stat-card {
-            background: var(--light-bg);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-        }
-
-        .stat-card-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-color
+                <div class="input-group">
+                    <label id="dataLabel">أدخل النص</label>
+                    <textarea id="dataInput" placeholder="أدخل البي
