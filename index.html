@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Studio Pro | مستقبل رموز QR</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- مكتبة توليد الـ QR -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <style>
         :root {
-            /* لوحة ألوان عصرية (Modern Palette) */
-            --accent-primary: #8b5cf6; /* Violet */
-            --accent-secondary: #06b6d4; /* Cyan */
+            --accent-primary: #8b5cf6;
+            --accent-secondary: #06b6d4;
             --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
             --glass-bg: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
@@ -38,7 +38,6 @@
             overflow-x: hidden;
         }
 
-        /* إضافة دوائر مضيئة في الخلفية لإعطاء عمق (Ambient Light) */
         body::before, body::after {
             content: "";
             position: absolute;
@@ -57,7 +56,6 @@
             margin: 0 auto;
         }
 
-        /* Header - Glassmorphism */
         header {
             display: flex;
             justify-content: space-between;
@@ -75,7 +73,6 @@
         .logo {
             font-size: 26px;
             font-weight: 800;
-            letter-spacing: -1px;
             background: linear-gradient(to right, #a78bfa, #22d3ee);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -92,7 +89,7 @@
             height: 42px;
             border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
         }
 
         .btn-icon:hover {
@@ -101,7 +98,6 @@
             box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
         }
 
-        /* Main Content Layout */
         .main-content {
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
@@ -113,7 +109,6 @@
             .main-content { grid-template-columns: 1fr; }
         }
 
-        /* Modern Card Design */
         .card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -122,12 +117,6 @@
             border-radius: 24px;
             padding: 35px;
             box-shadow: var(--card-shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(139, 92, 246, 0.3);
         }
 
         .card-title {
@@ -146,7 +135,6 @@
             border-radius: 12px;
         }
 
-        /* Form Elements */
         .input-group {
             margin-bottom: 25px;
         }
@@ -156,7 +144,6 @@
             margin-bottom: 10px;
             font-size: 14px;
             color: var(--text-dim);
-            font-weight: 500;
         }
 
         select, textarea {
@@ -177,7 +164,6 @@
             box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
         }
 
-        /* Action Button */
         .btn-generate {
             width: 100%;
             padding: 16px;
@@ -201,9 +187,16 @@
             box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
         }
 
-        /* QR Preview Area */
+        .preview-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+
         .qr-preview-box {
-            background: white; /* QR codes must be on white for reliability */
+            background: white;
             padding: 20px;
             border-radius: 20px;
             display: inline-block;
@@ -213,14 +206,6 @@
 
         .qr-preview-box:hover {
             transform: scale(1.05) rotate(2deg);
-        }
-
-        .preview-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 30px;
         }
 
         .btn-download {
@@ -239,7 +224,6 @@
             box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
         }
 
-        /* History Section */
         .history-list {
             list-style: none;
             display: grid;
@@ -257,10 +241,6 @@
             justify-content: space-between;
             align-items: center;
             transition: 0.3s;
-        }
-
-        .history-card:hover {
-            background: rgba(255, 255, 255, 0.07);
         }
 
         .history-text {
@@ -288,7 +268,6 @@
             color: white;
         }
 
-        /* Alerts */
         .alert {
             display: none;
             padding: 15px;
@@ -299,13 +278,6 @@
             border: 1px solid var(--danger);
             font-size: 14px;
             text-align: center;
-            animation: shake 0.4s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
         }
 
         .modal {
@@ -357,7 +329,6 @@
         </header>
 
         <div class="main-content">
-            <!-- Input Card -->
             <div class="card">
                 <div class="card-title">
                     <i class="fas fa-wand-magic-sparkles"></i>
@@ -387,7 +358,6 @@
                 </button>
             </div>
 
-            <!-- Preview Card -->
             <div class="card">
                 <div class="card-title">
                     <i class="fas fa-eye"></i>
@@ -404,19 +374,15 @@
             </div>
         </div>
 
-        <!-- History Section -->
         <div class="card">
             <div class="card-title">
                 <i class="fas fa-clock-rotate-left"></i>
                 الأرشيف الذكي
             </div>
-            <div class="history-list" id="historyList">
-                <!-- History items inject here -->
-            </div>
+            <div class="history-list" id="historyList"></div>
         </div>
     </div>
 
-    <!-- Info Modal -->
     <div class="modal" id="infoModal">
         <div class="modal-content">
             <button class="close-modal" id="closeModal">&times;</button>
@@ -429,6 +395,7 @@
     </div>
 
     <script>
+        // عناصر الصفحة
         const qrcodeContainer = document.getElementById("qrcode");
         const dataInput = document.getElementById("dataInput");
         const generateBtn = document.getElementById("generateBtn");
@@ -436,7 +403,7 @@
         const errorAlert = document.getElementById("errorAlert");
         const historyList = document.getElementById("historyList");
 
-        // Initialize QRCode
+        // إنشاء كائن الـ QR
         const qr = new QRCode(qrcodeContainer, {
             width: 200,
             height: 200,
@@ -445,29 +412,60 @@
             correctLevel: QRCode.CorrectLevel.H
         });
 
-        generateBtn.addEventListener("click", () => {
+        // دالة توليد الرمز
+        generateBtn.onclick = function() {
             const value = dataInput.value.trim();
+            
             if (!value) {
                 errorAlert.style.display = "block";
                 return;
             }
+
             errorAlert.style.display = "none";
-            
             qr.makeCode(value);
 
+            // تفعيل زر التحميل
             setTimeout(() => {
                 const img = qrcodeContainer.querySelector("img");
                 if (img) {
                     downloadBtn.href = img.src;
-                    downloadBtn.download = `QR_${Date.now()}.png`;
+                    downloadBtn.download = `QR_Code_${Date.now()}.png`;
                     downloadBtn.style.display = "inline-block";
                 }
-            }, 150);
+            }, 200);
 
             saveToHistory(value);
-        });
+        };
 
+        // دالة حفظ في السجل
         function saveToHistory(text) {
-            const div = document.createElement("div");
-            div.className = "history-card";
-            div.innerHTML =
+            const card = document.createElement("div");
+            card.className = "history-card";
+            card.innerHTML = `
+                <span class="history-text">${text}</span>
+                <button class="btn-del" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i></button>
+            `;
+            historyList.prepend(card);
+        }
+
+        // التحكم في المودال
+        document.getElementById("infoBtn").onclick = () => document.getElementById("infoModal").classList.add("show");
+        document.getElementById("closeModal").onclick = () => document.getElementById("infoModal").classList.remove("show");
+        window.onclick = (event) => {
+            if (event.target == document.getElementById("infoModal")) {
+                document.getElementById("infoModal").classList.remove("show");
+            }
+        };
+
+        // تغيير تسمية الحقل بناءً على النوع
+        document.getElementById("dataType").onchange = function() {
+            const labels = {
+                text: "النص المراد تحويله",
+                url: "أدخل رابط الموقع (URL)",
+                email: "أدخل البريد الإلكتروني",
+                phone: "أدخل رقم الهاتف"
+            };
+            document.getElementById("dataLabel").innerText = labels[this.value];
+        };
+    </script>
+</body>
