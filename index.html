@@ -1,33 +1,25 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Studio - توليد رموز QR احترافي</title>
+    <title>QR Studio Pro | مستقبل رموز QR</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <style>
         :root {
-            --primary: #6366f1;
-            --secondary: #ec4899;
+            /* لوحة ألوان عصرية (Modern Palette) */
+            --accent-primary: #8b5cf6; /* Violet */
+            --accent-secondary: #06b6d4; /* Cyan */
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
             --success: #10b981;
-            --danger: #ef4444;
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --card: #ffffff;
-            --text: #1e293b;
-            --text-light: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        [data-theme="dark"] {
-            --card: #1e293b;
-            --text: #f1f5f9;
-            --text-light: #cbd5e1;
-            --border: #334155;
-            --light: #0f172a;
+            --danger: #f43f5e;
+            --card-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
         }
 
         * {
@@ -37,479 +29,445 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
             min-height: 100vh;
-            color: var(--text);
-            transition: background 0.3s;
+            color: var(--text-main);
             padding: 20px;
+            overflow-x: hidden;
         }
 
-        body.dark-mode {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        /* إضافة دوائر مضيئة في الخلفية لإعطاء عمق (Ambient Light) */
+        body::before, body::after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.4;
         }
+        body::before { background: var(--accent-primary); top: 10%; left: 10%; }
+        body::after { background: var(--accent-secondary); bottom: 10%; right: 10%; }
 
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
-        /* ===== HEADER ===== */
+        /* Header - Glassmorphism */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 40px;
-            padding: 20px;
-            background: var(--card);
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            flex-wrap: wrap;
-            gap: 15px;
+            margin-bottom: 50px;
+            padding: 25px 40px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
         }
 
         .logo {
-            font-size: 28px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #6366f1, #ec4899);
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #a78bfa, #22d3ee);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 15px;
-            align-items: center;
+            gap: 12px;
         }
 
         .btn-icon {
-            background: var(--primary);
-            border: none;
-            color: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 18px;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .btn-icon:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+            background: var(--accent-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
         }
 
-        /* ===== MAIN CONTENT ===== */
+        /* Main Content Layout */
         .main-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.2fr 0.8fr;
             gap: 30px;
             margin-bottom: 40px;
         }
 
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            header {
-                flex-direction: column;
-            }
+        @media (max-width: 850px) {
+            .main-content { grid-template-columns: 1fr; }
         }
 
-        /* ===== CARD ===== */
+        /* Modern Card Design */
         .card {
-            background: var(--card);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            transition: all 0.3s;
-            border: 1px solid var(--border);
-            animation: slideIn 0.5s ease;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-color: rgba(139, 92, 246, 0.3);
         }
 
         .card-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: var(--text);
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
         }
 
         .card-title i {
-            color: var(--primary);
+            color: var(--accent-secondary);
+            background: rgba(6, 182, 212, 0.1);
+            padding: 10px;
+            border-radius: 12px;
         }
 
-        /* ===== INPUT ===== */
+        /* Form Elements */
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .input-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--text-dim);
             font-weight: 500;
-            color: var(--text);
-            font-size: 14px;
         }
 
-        input[type="text"],
-        input[type="url"],
-        textarea,
-        select {
+        select, textarea {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            font-size: 14px;
-            font-family: inherit;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            color: var(--text-main);
+            font-size: 15px;
             transition: all 0.3s;
-            background: var(--card);
-            color: var(--text);
+            font-family: inherit;
         }
 
-        input:focus,
-        textarea:focus,
-        select:focus {
+        select:focus, textarea:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        /* ===== GRID OPTIONS ===== */
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 480px) {
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* ===== BUTTONS ===== */
-        .btn {
-            padding: 12px 24px;
+        /* Action Button */
+        .btn-generate {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #6366f1, #ec4899);
-            color: white;
-            width: 100%;
             justify-content: center;
+            gap: 10px;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99,102,241,0.4);
+        .btn-generate:hover {
+            filter: brightness(1.1);
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
         }
 
-        .btn-small {
-            background: var(--secondary);
-            color: white;
-            padding: 8px 16px;
-            font-size: 12px;
+        /* QR Preview Area */
+        .qr-preview-box {
+            background: white; /* QR codes must be on white for reliability */
+            padding: 20px;
+            border-radius: 20px;
+            display: inline-block;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .btn-small:hover {
-            background: #d9326f;
+        .qr-preview-box:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .preview-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
         }
 
         .btn-download {
             background: var(--success);
             color: white;
-            padding: 8px 16px;
-            font-size: 12px;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: none;
         }
 
         .btn-download:hover {
-            background: #059669;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
         }
 
-        /* ===== QR PREVIEW ===== */
-        .qr-preview {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            min-height: 350px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 2px dashed var(--border);
-            margin-bottom: 20px;
-        }
-
-        .qr-preview #qrcode {
-            max-width: 100%;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .qr-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        /* ===== HISTORY ===== */
-        .history-container {
-            margin-top: 30px;
-        }
-
+        /* History Section */
         .history-list {
             list-style: none;
-            max-height: 400px;
-            overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        .history-item {
+        .history-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
             padding: 15px;
-            background: var(--light);
-            border-radius: 8px;
-            margin-bottom: 10px;
+            border-radius: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid var(--border);
-            transition: all 0.3s;
+            transition: 0.3s;
         }
 
-        .history-item:hover {
-            transform: translateX(5px);
-            background: var(--border);
+        .history-card:hover {
+            background: rgba(255, 255, 255, 0.07);
         }
 
-        .history-item-text {
-            flex: 1;
+        .history-text {
+            font-size: 13px;
+            color: var(--text-dim);
+            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
-            font-size: 13px;
+            max-width: 180px;
         }
 
-        .history-item-time {
-            font-size: 11px;
-            color: var(--text-light);
-            margin: 0 10px;
+        .btn-del {
+            background: rgba(244, 63, 94, 0.1);
+            color: var(--danger);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .history-delete {
+        .btn-del:hover {
             background: var(--danger);
             color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s;
         }
 
-        .history-delete:hover {
-            background: #dc2626;
-        }
-
-        /* ===== ALERTS ===== */
+        /* Alerts */
         .alert {
-            padding: 15px 20px;
-            border-radius: 10px;
+            display: none;
+            padding: 15px;
+            border-radius: 12px;
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            animation: slideIn 0.3s ease;
-        }
-
-        .alert-success {
-            background: rgba(16,185,129,0.1);
-            color: var(--success);
-            border-left: 4px solid var(--success);
-        }
-
-        .alert-error {
-            background: rgba(239,68,68,0.1);
+            background: rgba(244, 63, 94, 0.1);
             color: var(--danger);
-            border-left: 4px solid var(--danger);
+            border: 1px solid var(--danger);
+            font-size: 14px;
+            text-align: center;
+            animation: shake 0.4s ease;
         }
 
-        /* ===== ANIMATIONS ===== */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        /* ===== MODAL ===== */
         .modal {
             display: none;
             position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
             z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            animation: fadeIn 0.3s;
-        }
-
-        .modal.show {
-            display: flex;
             align-items: center;
             justify-content: center;
         }
-
+        .modal.show { display: flex; }
         .modal-content {
-            background: var(--card);
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: slideIn 0.3s;
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 24px;
+            max-width: 450px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            text-align: center;
         }
 
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-header h2 {
-            font-size: 20px;
-        }
-
-        .close-btn {
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            left: 20px;
             background: none;
             border: none;
+            color: var(--text-dim);
             font-size: 24px;
             cursor: pointer;
-            color: var(--text-light);
-            transition: all 0.3s;
-        }
-
-        .close-btn:hover {
-            color: var(--danger);
-            transform: rotate(90deg);
-        }
-
-        /* ===== SCROLLBAR ===== */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--light);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-light);
-        }
-
-        .empty-state i {
-            font-size: 40px;
-            margin-bottom: 20px;
-            opacity: 0.5;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <!-- HEADER -->
         <header>
             <div class="logo">
-                <i class="fas fa-qrcode"></i>
-                QR Studio
+                <i class="fas fa-bolt"></i>
+                QR Studio Pro
             </div>
             <div class="header-actions">
-                <button class="btn-icon" id="themeToggle" title="تبديل المظهر">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button class="btn-icon" id="infoBtn" title="معلومات">
-                    <i class="fas fa-info-circle"></i>
+                <button class="btn-icon" id="infoBtn" title="عن البرنامج">
+                    <i class="fas fa-circle-info"></i>
                 </button>
             </div>
         </header>
 
-        <!-- MAIN CONTENT -->
         <div class="main-content">
-            <!-- LEFT SECTION - INPUT -->
+            <!-- Input Card -->
             <div class="card">
                 <div class="card-title">
-                    <i class="fas fa-edit"></i>
-                    إنشاء رمز QR
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    صمم رمزك الخاص
                 </div>
 
-                <div id="alertContainer"></div>
+                <div class="alert" id="errorAlert">⚠️ يرجى إدخال البيانات أولاً!</div>
 
                 <div class="input-group">
-                    <label>نوع البيانات</label>
+                    <label>نوع المحتوى</label>
                     <select id="dataType">
-                        <option value="text">نص عادي</option>
-                        <option value="url">رابط ويب</option>
+                        <option value="text">نص حر</option>
+                        <option value="url">رابط إلكتروني</option>
                         <option value="email">بريد إلكتروني</option>
-                        <option value="phone">رقم هاتف</option>
-                        <option value="wifi">شبكة WiFi</option>
+                        <option value="phone">رقم اتصال</option>
                     </select>
                 </div>
 
                 <div class="input-group">
-                    <label id="dataLabel">أدخل النص</label>
-                    <textarea id="dataInput" placeholder="أدخل البي
+                    <label id="dataLabel">النص المراد تحويله</label>
+                    <textarea id="dataInput" placeholder="اكتب هنا ما تود تحويله إلى رمز QR..."></textarea>
+                </div>
+
+                <button class="btn-generate" id="generateBtn">
+                    <i class="fas fa-qrcode"></i>
+                    توليد الرمز الآن
+                </button>
+            </div>
+
+            <!-- Preview Card -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-eye"></i>
+                    المعاينة الفورية
+                </div>
+                <div class="preview-container">
+                    <div class="qr-preview-box" id="qrBox">
+                        <div id="qrcode"></div>
+                    </div>
+                    <a href="#" id="downloadBtn" class="btn-download">
+                        <i class="fas fa-cloud-download-alt"></i> تحميل الرمز (PNG)
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-clock-rotate-left"></i>
+                الأرشيف الذكي
+            </div>
+            <div class="history-list" id="historyList">
+                <!-- History items inject here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Modal -->
+    <div class="modal" id="infoModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <div class="logo" style="justify-content: center; margin-bottom: 20px;">QR Studio Pro</div>
+            <p style="color: var(--text-dim); line-height: 1.6;">
+                منصة متطورة لتحويل البيانات إلى رموز استجابة سريعة بدقة عالية. 
+                تتميز بالسرعة، الخصوصية التامة، وتصميم عصري يسهل تجربة المستخدم.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const qrcodeContainer = document.getElementById("qrcode");
+        const dataInput = document.getElementById("dataInput");
+        const generateBtn = document.getElementById("generateBtn");
+        const downloadBtn = document.getElementById("downloadBtn");
+        const errorAlert = document.getElementById("errorAlert");
+        const historyList = document.getElementById("historyList");
+
+        // Initialize QRCode
+        const qr = new QRCode(qrcodeContainer, {
+            width: 200,
+            height: 200,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        generateBtn.addEventListener("click", () => {
+            const value = dataInput.value.trim();
+            if (!value) {
+                errorAlert.style.display = "block";
+                return;
+            }
+            errorAlert.style.display = "none";
+            
+            qr.makeCode(value);
+
+            setTimeout(() => {
+                const img = qrcodeContainer.querySelector("img");
+                if (img) {
+                    downloadBtn.href = img.src;
+                    downloadBtn.download = `QR_${Date.now()}.png`;
+                    downloadBtn.style.display = "inline-block";
+                }
+            }, 150);
+
+            saveToHistory(value);
+        });
+
+        function saveToHistory(text) {
+            const div = document.createElement("div");
+            div.className = "history-card";
+            div.innerHTML =
